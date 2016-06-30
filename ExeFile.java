@@ -23,7 +23,6 @@ public class ExeFile {
 		}					
 	}
 }
-
 /****
  * Process类是一个抽象类，封装了一个进程（即一个可执行程序）
  * Runtime.getRuntime().exec("") 创建一个本机进程
