@@ -6,21 +6,21 @@ import java.text.*;
 
 //Centos环境下Java 调用ffmpeg进行转码的示例代码
 public class ExeFFmpeg {
-	public static void main(String[] args){
-		String mpegPath = "sudo //media//data//ffmpeg//bin//ffmpeg ";
-        String cmd = mpegPath + "-i //media//data//videotranscoding//video1.mp4 //media//data//videotranscoding//video1.avi";	
+    public static void main(String[] args){
+	String ffmpegPath = "/media/data/ffmpeg/bin/ffmpeg "; //the path of ffmpeg.exe
+        String cmd = ffmpegPath + "-i /media/data/videotranscoding/video1.mp4 /media/data/videotranscoding/video1.avi";	
         //System.out.println(cmd);
-		System.out.println("Executing a FFMPEG Transcoding!");
-		exeffmpeg(cmd);	
+        System.out.println("Executing a FFMPEG Transcoding!");
+	exeffmpeg(cmd);	
         System.out.println("Transcoding is finished!");
-	}
+    }
 	
-	private static void exeffmpeg(String cmd){
-		try {
-			Process process = null;
-			Runtime rt = Runtime.getRuntime();
+    private static void exeffmpeg(String cmd){
+	try {
+	    Process process = null;
+	    Runtime rt = Runtime.getRuntime();
             //System.out.println(rt.freeMemory());
-			process = rt.exec(cmd);
+	    process = rt.exec(cmd);
             InputStream stderr = process.getErrorStream();
             InputStreamReader isr = new InputStreamReader(stderr);
             BufferedReader br = new BufferedReader(isr);
@@ -29,16 +29,12 @@ public class ExeFFmpeg {
                 System.out.println(line);
             int exitVal = process.waitFor();
             System.out.println("Process exitValue:" + exitVal);
-	
-			//System.out.println(rt.totalMemory());
-                        
-                  
-		} catch (Throwable t) {
-			// TODO Auto-generated catch block
-			t.printStackTrace();
-			System.out.println("Executing Error!");
-		}					
-	}
+	} catch (Throwable t) {
+		// TODO Auto-generated catch block
+	    t.printStackTrace();
+	    System.out.println("Executing Error!");
+	}					
+    }
 }
 
 /****
