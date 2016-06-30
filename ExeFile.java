@@ -3,19 +3,24 @@ import java.io.IOException;
 //Java 调用外部*.exe可执行文件
 public class ExeFile {
 	public static void main(String[] args){
+		String path = "c:\\windows\\system32\\notepad.exe";	
 		System.out.println("Executing a exe file!");	
+		exeNotepad(path);
+		System.out.println("Executing a NotePad Application!");
+	}
+	
+	private static void exeNotepad(String path){
 		try {
 			Process process = null;
 			Runtime rt = Runtime.getRuntime();
-			process = rt.exec("c:\\windows\\system32\\notepad.exe");
-			System.out.println(rt.freeMemory());
-			System.out.println(rt.totalMemory());
+			process = rt.exec(path);
+			//System.out.println(rt.freeMemory());
+			//System.out.println(rt.totalMemory());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Executing Error!");
-		}
-		System.out.println("Executing a NotePad Application!");
+		}					
 	}
 }
 
