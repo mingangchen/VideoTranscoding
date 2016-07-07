@@ -27,7 +27,8 @@ public class VideoTranscoding {
 		
 		public void map(Object key, Text value, Context context) throws IOException, InterruptedException{
 			
-			String videoinputPath = value.toString(); 		
+			String videoinputPath = value.toString(); 
+			//System.out.println("Map key: " + key.toString()+" Map value: " + value.toString());	
 			transcoder(videoinputPath);
 			videoPath.set(videoinputPath);
 			context.write(videoPath, one);									
@@ -37,21 +38,21 @@ public class VideoTranscoding {
 			String ffmpegPath = "/media/data/ffmpeg/bin/ffmpeg ";
 			String inputPath = path;
 			String outputPath = inputPath.substring(0,inputPath.indexOf("."))+ ".avi";  
-			String cmd = ffmpegPath + "-i" + inputPath + outputPath; 
+			String cmd = ffmpegPath + "-i " + inputPath + " " + outputPath;
 			try{
 			    Process process = Runtime.getRuntime().exec(cmd);
 			    InputStream stderr = process.getErrorStream();
-	            InputStreamReader isr = new InputStreamReader(stderr);
-	            BufferedReader br = new BufferedReader(isr);
-	            String line = null;
-	            while((line = br.readLine())!=null)
-	                System.out.println(line);
-	            int exitVal = process.waitFor();
-	            System.out.println("Process exitValue:" + exitVal); 			    
+	                    InputStreamReader isr = new InputStreamReader(stderr);
+	                    BufferedReader br = new BufferedReader(isr);
+	                    String line = null;
+	                    while((line = br.readLine())!=null)
+	                        System.out.println(line);
+	                    int exitVal = process.waitFor();
+	                    System.out.println("Process exitValue:" + exitVal); 			    
 			}
 			catch(Throwable t){
-				t.printStackTrace();
-				System.out.println("Executing error!");
+			    t.printStackTrace();
+			    System.out.println("Executing error!");
 			}			
 		}
 		
@@ -61,10 +62,10 @@ public class VideoTranscoding {
 			job.setJarByClass(VideoTranscoding.class);
 			job.setMapperClass(TranscodingMapper.class);
 			job.setOutputKeyClass(Text.class);
-		    job.setOutputValueClass(IntWritable.class);
+		        job.setOutputValueClass(IntWritable.class);
 			FileInputFormat.addInputPath(job, new Path(args[0]));
-		    FileOutputFormat.setOutputPath(job, new Path(args[1]));
-		    System.exit(job.waitForCompletion(true) ? 0 : 1);		
+		        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		        System.exit(job.waitForCompletion(true) ? 0 : 1);		
 		}
 	}
 }
